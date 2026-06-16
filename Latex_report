@@ -1,0 +1,298 @@
+% =====================================================
+% EUREKA BY ALLEN - ONE PAGE PRODUCT TEARDOWN
+% =====================================================
+
+\documentclass[a4paper,9pt]{article}
+
+\usepackage[a4paper,
+top=7mm,
+bottom=7mm,
+left=8mm,
+right=8mm]{geometry}
+
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{array}
+\usepackage{pgfplots}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\pgfplotsset{compat=1.18}
+
+\pagestyle{empty}
+
+% ---------------- COLORS ----------------
+
+\definecolor{accent}{HTML}{F5A623}
+\definecolor{textgray}{HTML}{555555}
+\definecolor{light}{HTML}{F8F8F8}
+\definecolor{success}{HTML}{DFF5E1}
+\definecolor{danger}{HTML}{FCE8E8}
+\definecolor{byjus}{HTML}{4CAF7D}
+\definecolor{khan}{HTML}{9B8EC4}
+
+\titleformat{\section}
+{\normalsize\bfseries\color{accent}}
+{}{0em}{}[\vspace{-2mm}]
+
+\setlist[itemize]{leftmargin=4mm,itemsep=0pt,topsep=0pt,parsep=0pt}
+
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{4mm}
+\setlength{\parskip}{0pt}
+
+\begin{document}
+
+% =====================================================
+% HEADER
+% =====================================================
+
+\begin{center}
+{\fontsize{20}{22}\selectfont\bfseries Eureka by ALLEN}
+
+\vspace{0.5mm}
+
+{\normalsize Product Teardown \& Growth Opportunity}
+
+\vspace{1mm}
+
+\hrule
+\end{center}
+
+\vspace{1mm}
+
+% =====================================================
+% HERO SECTION
+% =====================================================
+
+\begin{tcolorbox}[
+colback=accent!5,
+colframe=accent,
+boxrule=0.8pt,
+top=0.5mm, bottom=0.5mm, left=2mm, right=2mm]
+\raggedright
+\textbf{Eureka in One Line}\quad An active learning system for Class 10 board prep that replaces passive lectures and rote memorisation with animated storytelling, interactive prompts, and guided problem-solving — making understanding feel more like following a narrative than attending a class.
+\end{tcolorbox}
+
+\vspace{1mm}
+
+\begin{multicols}{2}
+
+% =====================================================
+% LEFT COLUMN
+% =====================================================
+
+\raggedright
+
+\section*{Why It Stands Out}
+
+Most edtech platforms optimise for \textbf{content volume and exam drilling}. Eureka optimises for \textbf{engagement and conceptual clarity} — sitting at the intersection of gamified edtech and proven ALLEN coaching fundamentals.
+
+\vspace{1mm}
+
+% ---- MULTI-COMPETITOR RADAR CHART ----
+\begin{center}
+\begin{tikzpicture}[scale=0.62]
+
+\foreach \r in {1,2,3,4}{
+  \draw[gray!25,thin]
+    (90:\r)--(18:\r)--(-54:\r)--(-126:\r)--(162:\r)--cycle;
+}
+
+\foreach \a in {90,18,-54,-126,162}{
+  \draw[gray!35,thin] (0,0)--(\a:4);
+}
+
+\node[font=\scriptsize] at (90:4.55)  {Story-led};
+\node[font=\scriptsize] at (18:4.75)  {AI Doubts};
+\node[font=\scriptsize] at (-54:4.85) {Free Access};
+\node[font=\scriptsize] at (-126:4.75){Live Tutors};
+\node[font=\scriptsize] at (162:4.75) {Mock Tests};
+
+\draw[fill=accent!25, draw=accent, thick, line width=1.2pt]
+  (90:3.8)--(18:3.5)--(-54:1.0)--(-126:1.2)--(162:3.0)--cycle;
+
+\foreach \a/\r in {90/3.8, 18/3.5, -54/1.0, -126/1.2, 162/3.0}{
+  \fill[accent] (\a:\r) circle (2.2pt);
+}
+
+\draw[fill=byjus!15, draw=byjus, thick, dashed, line width=1.0pt]
+  (90:2.5)--(18:2.0)--(-54:3.0)--(-126:2.2)--(162:2.8)--cycle;
+
+\foreach \a/\r in {90/2.5, 18/2.0, -54/3.0, -126/2.2, 162/2.8}{
+  \fill[byjus] (\a:\r) circle (2pt);
+}
+
+\draw[fill=khan!15, draw=khan, thick, dashed, line width=1.0pt]
+  (90:1.8)--(18:1.5)--(-54:4.0)--(-126:1.0)--(162:1.5)--cycle;
+
+\foreach \a/\r in {90/1.8, 18/1.5, -54/4.0, -126/1.0, 162/1.5}{
+  \fill[khan] (\a:\r) circle (2pt);
+}
+
+\node[font=\scriptsize, text width=6.5cm, align=left] at (0,-4.8) {%
+  {\textcolor{accent}{\rule[0.5ex]{1em}{3pt}}}~\textcolor{black}{Eureka}\quad
+  {\textcolor{byjus}{\rule[0.5ex]{1em}{3pt}}}~\textcolor{black}{BYJU'S}\quad
+  {\textcolor{khan}{\rule[0.5ex]{1em}{3pt}}}~\textcolor{black}{Khan Academy}%
+};
+
+\node[font=\tiny\itshape\color{textgray}, text width=5.5cm, align=center] at (-0.5,-5.35)
+  {Engagement style vs content depth across platforms};
+
+\end{tikzpicture}
+\end{center}
+
+\vspace{0mm}
+
+\raggedright
+\textbf{Key Insight:} Story-led learning is Eureka's strongest differentiator. Every chapter follows a consistent narrative arc — more immersive than lecture-first platforms.
+
+\vspace{1.5mm}
+
+\section*{The Funnel Problem}
+
+\begin{center}
+\begin{tikzpicture}
+
+\node[draw,rounded corners,minimum width=2.8cm,minimum height=0.55cm,font=\small] (a) at (0,0) {Install App};
+\node[draw,rounded corners,minimum width=2.8cm,minimum height=0.55cm,font=\small] (b) at (0,-0.9) {Create Account};
+\node[draw=red,fill=red!10,rounded corners,minimum width=2.8cm,minimum height=0.55cm,font=\small] (c) at (0,-1.8)
+  {\textbf{Trial / Upsell} \textsuperscript{\color{red}!}};
+\node[draw,rounded corners,minimum width=2.8cm,minimum height=0.55cm,font=\small] (d) at (0,-2.7) {Watch Lesson};
+\node[draw,rounded corners,minimum width=2.8cm,minimum height=0.55cm,font=\small] (e) at (0,-3.6) {Experience Eureka};
+
+\draw[->] (a)--(b);
+\draw[->] (b)--(c);
+\draw[->] (c)--(d);
+\draw[->] (d)--(e);
+
+\node[right, text width=2.4cm, font=\scriptsize\color{textgray}] at (1.5,-1.8)
+  {Commitment before value is felt};
+
+\end{tikzpicture}
+\end{center}
+
+\vspace{0mm}
+
+\raggedright
+\textbf{Observation:} The strongest part of the product appears \emph{after} onboarding. Students are asked to commit before experiencing Eureka's value. Urgency appears before trust.
+
+\columnbreak
+
+% =====================================================
+% RIGHT COLUMN
+% =====================================================
+
+\raggedright
+
+\section*{What Works}
+
+\begin{tcolorbox}[colback=success,colframe=green!50!black,
+top=0.5mm,bottom=0.5mm,left=2mm,right=2mm]
+\raggedright
+\begin{itemize}
+\item Story-led curriculum — narrative over lectures
+\item \textbf{Watch $\rightarrow$ Learn $\rightarrow$ Ace} framework
+\item Strong visual and animated explanations
+\item Teacher credibility: profiles, philosophy, chapter ownership
+\item 24/7 AI doubt support
+\item ALLEN's 35+ year legacy and brand trust
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{1mm}
+
+\section*{What Doesn't Work}
+
+\begin{tcolorbox}[colback=danger,colframe=red,
+top=0.5mm,bottom=0.5mm,left=2mm,right=2mm]
+\raggedright
+\textbf{Selling Starts Before Learning}
+
+\vspace{0.5mm}
+Enrollment prompts surface within minutes — before meaningful learning. Urgency before trust makes commitment feel premature.
+
+\vspace{1mm}
+\textbf{Language Creates Friction}
+
+\vspace{0.5mm}
+Chapters are English-first. Students who learn best in Hindi, Telugu, Tamil or Marathi hit a comprehension wall before they reach the value.
+\end{tcolorbox}
+
+\vspace{1.5mm}
+
+\section*{The Opportunity: Speak Their Language First}
+
+\raggedright
+\textbf{Before confusion begins, speak their language.}
+
+\vspace{1mm}
+
+\renewcommand{\arraystretch}{1.05}
+{\tiny
+\begin{tabular}{|p{1.7cm}|p{3.1cm}|p{1.85cm}|}
+\hline
+\rowcolor{accent!19}
+\raggedright\textbf{Recommendation} &
+\raggedright\textbf{Why It Matters} &
+\raggedright\textbf{Success Metric} \tabularnewline
+\hline
+\raggedright\textbf{Language Picker} &
+\raggedright Ask users to select a preferred language at onboarding (English, Hindi, Telugu, Tamil, Marathi, Bengali). One screen, zero friction. &
+\raggedright\% users selecting non-English language \tabularnewline
+\hline
+\raggedright\textbf{Bilingual Notes} &
+\raggedright Translate concept notes before dubbed videos — faster to ship, immediately improves comprehension. &
+\raggedright Notes open rate by language segment \tabularnewline
+\hline
+\raggedright\textbf{AI Doubts in Local Lang} &
+\raggedright Students ask and receive doubt support in their preferred language via LLM-powered responses. &
+\raggedright Session duration \& support ticket drop \tabularnewline
+\hline
+\end{tabular}
+}
+
+\vspace{1mm}
+
+\begin{tcolorbox}[colback=accent!5, colframe=accent, boxrule=0.6pt,
+top=0.5mm, bottom=0.5mm, left=2mm, right=2mm]
+\raggedright
+\textbf{Expected Outcome:} Students experience value sooner, understand faster, and build trust \emph{before} being asked to commit.
+\end{tcolorbox}
+
+\vspace{1.5mm}
+
+\section*{Success Metrics}
+
+\begin{itemize}
+\item \% users selecting a non-English language (proxy for latent demand)
+\item Notes open rate by language segment vs English baseline
+\item Session duration growth post-language launch
+\item Conversion rate \emph{after} first lesson experienced
+\item Support ticket drop post-language doubt launch
+\end{itemize}
+
+\vspace{1.5mm}
+
+\begin{tcolorbox}[colback=accent!10, colframe=accent, boxrule=1pt,
+top=0.5mm, bottom=0.5mm, left=2mm, right=2mm]
+\centering
+{\large\bfseries Let Eureka Prove It.}
+
+\vspace{0.5mm}
+{\normalsize Let Them Learn. Then Let Them Choose.}
+
+\vspace{1mm}
+
+\raggedright
+The strongest path to conversion is not persuasion — it is comprehension.\\
+\textit{Understanding builds confidence. Confidence drives engagement. Engagement drives conversion.}
+\end{tcolorbox}
+
+\end{multicols}
+
+\end{document}
