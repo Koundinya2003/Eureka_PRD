@@ -1,0 +1,387 @@
+<title>Eureka Teardown</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,600,100;0,9..144,900,100;1,9..144,600,100&family=Figtree:ital,wght@0,400;0,600;0,800;1,400&family=DM+Mono:wght@400;500&family=Noto+Sans+Devanagari:wght@600&family=Noto+Sans+Telugu:wght@600&family=Noto+Sans+Tamil:wght@600&family=Noto+Sans+Bengali:wght@600&display=swap">
+<style>
+/* Identity: a night time storybook. Lilac page by day, a deep plum sky by night, a bulb yellow glow for the eureka moment, mint for what works, coral for friction. */
+:root {
+  --paper: #f4f1fb;
+  --page: #fdfcff;
+  --ink: #241a3d;
+  --muted: #6b6185;
+  --rule: #ddd6ee;
+  --bulb: #f2ad1b;
+  --bulb-soft: #fff1c9;
+  --mint: #1f9e7a;
+  --mint-soft: #dcf4ea;
+  --coral: #dc4b4b;
+  --coral-soft: #fde3e1;
+  --sky: #4f63d9;
+  --plum: #2b1f4a;
+  --plum-ink: #f6f2ff;
+  --display: "Fraunces", Georgia, serif;
+  --body: "Figtree", system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, monospace;
+  --scripts: "Noto Sans Devanagari", "Noto Sans Telugu", "Noto Sans Tamil", "Noto Sans Bengali", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #100c1e; --page: #18122c; --ink: #efeafc; --muted: #a79dc4; --rule: #2f2650;
+    --bulb: #ffc53d; --bulb-soft: #3a2e10; --mint: #4fd1a5; --mint-soft: #123329;
+    --coral: #ff7a72; --coral-soft: #3d1a1d; --sky: #8f9cff; --plum: #2d2258; --plum-ink: #f6f2ff;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #100c1e; --page: #18122c; --ink: #efeafc; --muted: #a79dc4; --rule: #2f2650;
+  --bulb: #ffc53d; --bulb-soft: #3a2e10; --mint: #4fd1a5; --mint-soft: #123329;
+  --coral: #ff7a72; --coral-soft: #3d1a1d; --sky: #8f9cff; --plum: #2d2258; --plum-ink: #f6f2ff;
+}
+* { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.45;
+}
+.sheet { width: 960px; margin: 0 auto; padding: 12px 20px; display: grid; gap: 16px; }
+
+/* chapter page: asymmetric, a chapter numeral hanging on the left */
+.chap { position: relative; background: var(--page); border-radius: 4px 22px 22px 4px; border-left: 10px solid var(--plum); padding: 24px 28px 26px 90px; }
+.chap .num { position: absolute; left: 20px; top: 16px; font-family: var(--display); font-weight: 900; font-size: 64px; line-height: 1; color: var(--bulb); font-variation-settings: "SOFT" 100; }
+.chap .kick { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.chap h2 { font-family: var(--display); font-weight: 900; font-size: 32px; line-height: 1.05; margin-top: 4px; font-variation-settings: "SOFT" 100; }
+.chap h2 em { font-style: italic; font-weight: 600; color: var(--sky); }
+.lead { font-size: 15px; color: var(--muted); margin-top: 6px; max-width: 640px; }
+.label { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+@keyframes fade { from { opacity: 0; } }
+@keyframes pop { 0% { opacity: 0; transform: scale(.4); } 70% { opacity: 1; transform: scale(1.08); } }
+@keyframes growx { from { transform: scaleX(0); } }
+@keyframes bloom { from { transform: scale(0); opacity: 0; } }
+@keyframes draw { from { stroke-dashoffset: 400; } }
+@keyframes tilt { from { opacity: 0; transform: translateY(18px) rotate(-6deg); } }
+
+/* ---------- hero ---------- */
+.hero { background: var(--plum); color: var(--plum-ink); border-radius: 4px 28px 28px 4px; border-left: 10px solid var(--bulb); display: grid; grid-template-columns: 1fr 300px; gap: 30px; padding: 30px 34px 30px 36px; overflow: hidden; position: relative; }
+.hero .kick { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--bulb); }
+.hero h1 { font-family: var(--display); font-weight: 900; font-size: 50px; line-height: 1.02; margin-top: 14px; font-variation-settings: "SOFT" 100; }
+.hero h1 em { font-style: italic; font-weight: 600; color: var(--bulb); }
+.hero .sub { margin-top: 14px; font-size: 15px; opacity: .85; max-width: 470px; }
+.q { margin-top: 20px; background: rgba(255,255,255,.07); border-radius: 14px; padding: 12px 16px; max-width: 480px; }
+.q .label { color: var(--bulb); }
+.q p { font-family: var(--display); font-style: italic; font-weight: 600; font-size: 19px; line-height: 1.25; margin-top: 4px; }
+.facts { display: flex; gap: 22px; margin-top: 18px; font-size: 12.5px; opacity: .9; }
+.facts b { display: block; font-family: var(--display); font-weight: 900; font-size: 26px; color: var(--plum-ink); }
+
+.phone { position: relative; width: 250px; justify-self: center; background: #0e0a1a; border-radius: 34px; padding: 12px; box-shadow: 0 0 0 2px rgba(255,255,255,.12); }
+.screen { background: #fdfcff; color: #241a3d; border-radius: 24px; padding: 18px 14px 16px; position: relative; overflow: hidden; }
+.notch { width: 70px; height: 6px; border-radius: 3px; background: #e2dcf0; margin: 0 auto 12px; }
+.bulb { width: 44px; height: 44px; margin: 0 auto; position: relative; }
+.bulb svg { width: 44px; height: 44px; position: relative; }
+.bulb::before { content: ""; position: absolute; inset: -14px; border-radius: 50%; background: radial-gradient(circle, rgba(242,173,27,.55), rgba(242,173,27,0) 65%); animation: glow 2.4s ease-in-out infinite; }
+@keyframes glow { 0%, 100% { opacity: .35; transform: scale(.85); } 50% { opacity: 1; transform: scale(1.15); } }
+.screen h4 { font-family: var(--body); font-weight: 800; font-size: 13.5px; text-align: center; margin-top: 6px; line-height: 1.25; }
+.screen .hint { font-size: 10.5px; color: #6b6185; text-align: center; margin-top: 2px; }
+.langs { position: relative; margin-top: 12px; }
+.langs .hl { position: absolute; left: 0; right: 0; top: 0; height: 34px; border-radius: 10px; background: #f2ad1b; animation: pick 12s steps(1) infinite; }
+@keyframes pick { 0% { transform: translateY(0); } 16.66% { transform: translateY(36px); } 33.33% { transform: translateY(72px); } 50% { transform: translateY(108px); } 66.66% { transform: translateY(144px); } 83.33% { transform: translateY(180px); } }
+.langs div { position: relative; height: 34px; margin-bottom: 2px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; border: 1px solid #e2dcf0; border-radius: 10px; }
+.langs b { font-family: var(--scripts); font-weight: 600; font-size: 14px; }
+.langs span { font-family: var(--mono); font-size: 10px; color: #6b6185; }
+.langs .en b { font-family: var(--body); font-weight: 800; }
+.screen .cta { margin-top: 10px; text-align: center; font-weight: 800; font-size: 12px; background: #241a3d; color: #fdfcff; border-radius: 10px; padding: 8px; }
+.phone-cap { text-align: center; font-size: 11px; opacity: .7; margin-top: 10px; font-family: var(--mono); }
+
+/* ---------- strengths ---------- */
+.books { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 18px; }
+.book { position: relative; padding: 14px 14px 14px 22px; border-radius: 4px 14px 14px 4px; color: #fff; min-height: 128px; animation: tilt .7s cubic-bezier(.2,.8,.2,1) both; }
+.book::before { content: ""; position: absolute; left: 6px; top: 0; bottom: 0; width: 3px; background: rgba(255,255,255,.35); }
+.book .label { color: rgba(255,255,255,.8); }
+.book b { display: block; font-family: var(--display); font-weight: 900; font-size: 21px; line-height: 1.05; margin-top: 8px; font-variation-settings: "SOFT" 100; }
+.book p { font-size: 11.5px; margin-top: 6px; opacity: .9; }
+.b1 { background: #4a3aa8; } .b2 { background: #b8452f; } .b3 { background: #1f8064; } .b4 { background: #2a5fae; }
+.loop { display: grid; grid-template-columns: 1.3fr 1fr; gap: 26px; margin-top: 20px; }
+.wla { display: flex; align-items: stretch; gap: 0; margin-top: 8px; }
+.wla div { flex: 1; padding: 10px 12px; background: var(--mint-soft); border-radius: 12px; animation: pop .5s both; }
+.wla div b { display: block; font-family: var(--display); font-weight: 900; font-size: 22px; color: var(--mint); }
+.wla div span { font-size: 11.5px; }
+.wla i { align-self: center; font-style: normal; font-size: 18px; color: var(--mint); padding: 0 6px; font-weight: 800; }
+.works { list-style: none; padding: 0; margin-top: 8px; display: grid; gap: 6px; }
+.works li { font-size: 12.5px; padding-left: 20px; position: relative; animation: rise .5s both; }
+.works li::before { content: ""; position: absolute; left: 2px; top: 5px; width: 9px; height: 9px; border-radius: 50%; background: var(--mint); }
+.works b { font-weight: 800; }
+
+/* ---------- landscape ---------- */
+.land { display: grid; grid-template-columns: 340px 1fr; gap: 30px; align-items: center; margin-top: 10px; }
+.radar { overflow: visible; }
+.radar text { font-family: var(--mono); font-size: 10.5px; fill: var(--muted); }
+.radar .grid { fill: none; stroke: var(--rule); }
+.radar .poly { transform-origin: 176px 165px; animation: bloom 1s cubic-bezier(.2,.8,.2,1) both; }
+.radar .eu { fill: var(--bulb); fill-opacity: .28; stroke: var(--bulb); stroke-width: 2.5; }
+.radar .by { fill: var(--mint); fill-opacity: .1; stroke: var(--mint); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.radar .ka { fill: var(--sky); fill-opacity: .1; stroke: var(--sky); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.legend { display: flex; gap: 16px; font-size: 12px; margin-top: 4px; justify-content: center; }
+.legend i { display: inline-block; width: 16px; height: 4px; vertical-align: middle; margin-right: 6px; border-radius: 2px; }
+.versus { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 10px; border-radius: 16px; overflow: hidden; }
+.versus div { padding: 14px 16px; animation: fade .6s both; }
+.versus .them { background: var(--rule); }
+.versus .us { background: var(--bulb-soft); }
+.versus b { display: block; font-family: var(--display); font-weight: 900; font-size: 20px; line-height: 1.1; margin-top: 4px; }
+.insight { margin-top: 14px; font-size: 13.5px; border-left: 4px solid var(--bulb); padding-left: 12px; }
+.note { font-size: 11px; color: var(--muted); margin-top: 8px; }
+
+/* ---------- friction ---------- */
+.fr { display: grid; grid-template-columns: 300px 1fr; gap: 30px; margin-top: 16px; }
+.funnel { display: grid; gap: 8px; position: relative; }
+.fstep { position: relative; padding: 9px 14px; border-radius: 12px; border: 1.5px solid var(--rule); font-weight: 600; font-size: 13px; animation: rise .5s both; display: flex; justify-content: space-between; align-items: center; }
+.fstep span { font-family: var(--mono); font-size: 10px; color: var(--muted); font-weight: 400; }
+.fstep.bad { border-color: var(--coral); background: var(--coral-soft); color: var(--coral); }
+.fstep.bad span { color: var(--coral); }
+.fstep.good { border-color: var(--bulb); background: var(--bulb-soft); }
+.trial { margin-top: 14px; background: #15111f; color: #f2ecff; border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; animation: rise .6s 1.2s both; }
+.trial .t { font-size: 11px; color: #f2ad1b; }
+.trial .c { font-family: var(--mono); font-size: 15px; font-weight: 500; }
+.trial .btn { margin-left: auto; background: #3b6ef0; color: #fff; font-weight: 800; font-size: 11.5px; padding: 6px 12px; border-radius: 99px; }
+.walls { display: grid; gap: 14px; }
+.wall { border-radius: 16px; padding: 16px 18px; background: var(--coral-soft); animation: rise .6s both; }
+.wall h3 { font-family: var(--display); font-weight: 900; font-size: 22px; line-height: 1.1; color: var(--coral); }
+.wall p { font-size: 13px; margin-top: 6px; }
+.wall .tags { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.wall .tags span { font-size: 11.5px; border: 1px solid var(--coral); color: var(--coral); border-radius: 99px; padding: 2px 10px; }
+.verdict { font-family: var(--display); font-style: italic; font-weight: 600; font-size: 20px; margin-top: 4px; }
+
+/* ---------- fix ---------- */
+.recs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+.rec { position: relative; border-radius: 18px; padding: 18px 16px 14px; background: var(--bulb-soft); animation: rise .6s both; display: flex; flex-direction: column; }
+.rec .n { width: 34px; height: 34px; border-radius: 50%; background: var(--bulb); color: #241a3d; display: grid; place-items: center; font-family: var(--display); font-weight: 900; font-size: 18px; }
+.rec h3 { font-family: var(--display); font-weight: 900; font-size: 19px; line-height: 1.1; margin-top: 10px; }
+.rec p { font-size: 12.5px; margin-top: 6px; flex: 1; }
+.rec .m { margin-top: 12px; border-top: 1.5px dashed var(--bulb); padding-top: 8px; font-size: 12px; }
+.rec .m .label { display: block; color: var(--ink); opacity: .7; }
+.newflow { margin-top: 20px; display: flex; align-items: center; gap: 8px; }
+.newflow div { padding: 8px 14px; border-radius: 99px; border: 1.5px solid var(--mint); color: var(--mint); font-weight: 800; font-size: 12.5px; animation: pop .5s both; white-space: nowrap; }
+.newflow div.last { background: var(--mint); color: var(--page); }
+.newflow i { font-style: normal; color: var(--muted); font-weight: 800; }
+.outcome { margin-top: 14px; font-size: 13.5px; }
+.outcome b { font-weight: 800; }
+
+/* ---------- close ---------- */
+.close { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 16px; }
+.metrics { list-style: none; padding: 0; display: grid; gap: 0; counter-reset: m; }
+.metrics li { counter-increment: m; position: relative; padding: 9px 0 9px 36px; border-bottom: 1px solid var(--rule); font-size: 13px; animation: rise .5s both; }
+.metrics li::before { content: counter(m); position: absolute; left: 0; top: 7px; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--sky); color: var(--sky); font-family: var(--mono); font-size: 11px; display: grid; place-items: center; }
+.metrics li small { display: block; color: var(--muted); font-size: 11.5px; }
+.ladder { display: grid; gap: 8px; margin-top: 8px; }
+.ladder div { display: flex; align-items: center; gap: 10px; animation: rise .5s both; }
+.ladder b { font-family: var(--display); font-weight: 900; font-size: 22px; }
+.ladder .bar { height: 12px; border-radius: 6px; background: var(--bulb); transform-origin: left; animation: growx .8s both; }
+.finale { margin-top: 18px; background: var(--plum); color: var(--plum-ink); border-radius: 18px; padding: 18px 20px; animation: rise .7s 1.4s both; }
+.finale h3 { font-family: var(--display); font-weight: 900; font-size: 28px; line-height: 1.05; font-variation-settings: "SOFT" 100; }
+.finale h3 em { color: var(--bulb); font-style: italic; font-weight: 600; }
+.finale p { margin-top: 8px; font-size: 13px; opacity: .88; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 980px) { .sheet { width: auto; } }
+</style>
+
+<main class="sheet">
+
+  <!-- 01 hero -->
+  <section class="hero" data-panel="01_hero" data-alt="Eureka by ALLEN, a product teardown. A brilliant learning idea hiding behind too much friction. Eureka is an active learning system for Class 10 board prep that replaces passive lectures and rote memorisation with animated storytelling, interactive prompts and guided problem solving, so understanding feels more like following a narrative than attending a class. Core question: can users discover Eureka's magic before they hit friction? Built from a 7 slide visual teardown and a 1 page written report. An illustrated phone screen shows the proposed language picker at onboarding, cycling through English, Hindi, Telugu, Tamil, Marathi and Bengali.">
+    <div>
+      <div class="kick">Product teardown · Eureka by ALLEN · Class 10 board prep</div>
+      <h1>A brilliant learning idea hiding behind <em>too much friction.</em></h1>
+      <p class="sub">An active learning system that swaps passive lectures and rote memorisation for animated storytelling, interactive prompts and guided problem solving, so understanding feels like following a narrative, not attending a class.</p>
+      <div class="q"><span class="label">Core question</span><p>“Can users discover Eureka's magic before they hit friction?”</p></div>
+      <div class="facts"><span><b>7</b>slide visual teardown</span><span><b>1</b>page written report</span><span><b>3</b>language first fixes</span></div>
+    </div>
+    <div>
+      <div class="phone">
+        <div class="screen">
+          <div class="notch"></div>
+          <div class="bulb"><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M22 5c-8 0-13 6-13 12.5 0 5 3 8 5 10.5 1.2 1.5 1.8 3 1.8 4.5h12.4c0-1.5.6-3 1.8-4.5 2-2.5 5-5.5 5-10.5C35 11 30 5 22 5z" fill="#f2ad1b" stroke="#241a3d" stroke-width="2"/><rect x="16" y="34" width="12" height="3.5" rx="1.5" fill="#241a3d"/><rect x="17.5" y="38.5" width="9" height="3" rx="1.5" fill="#241a3d"/><path d="M18 20l4 4 4-4" fill="none" stroke="#241a3d" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h4>Choose your preferred language for explanations</h4>
+          <div class="hint">one question, one screen</div>
+          <div class="langs">
+            <div class="hl"></div>
+            <div class="en"><b>English</b><span>EN</span></div>
+            <div><b>हिन्दी</b><span>Hindi</span></div>
+            <div><b>తెలుగు</b><span>Telugu</span></div>
+            <div><b>தமிழ்</b><span>Tamil</span></div>
+            <div><b>मराठी</b><span>Marathi</span></div>
+            <div><b>বাংলা</b><span>Bengali</span></div>
+          </div>
+          <div class="cta">Start learning</div>
+        </div>
+      </div>
+      <div class="phone-cap">proposed onboarding, screen 1</div>
+    </div>
+  </section>
+
+  <!-- 02 strengths -->
+  <section class="chap" data-panel="02_strengths" data-alt="Chapter 1, what works: the moment learning begins, the product shines. Each subject is its own narrative universe: The Chosen One for Maths (Real Numbers becomes an epic journey), The Legend of Zing for Chemistry, Bio Scope for Biology, and Light at the Museum for Physics. Storytelling is central to Eureka, not just a feature, and is its strongest differentiator against competitors. The Watch, Learn, Ace framework is a three tab loop on every course page: a story driven video, then structured notes plus bonus content, then MCQ and written tests with badge rewards, so learning has a clear arc, not just a playlist. Also working: strong visual and animated explanations; teacher credibility through profile pages with photo, 6 to 10+ years of experience, teaching philosophy and chapter list, real people rather than avatars; 24/7 AI doubt support; and ALLEN's 35+ year legacy and brand trust.">
+    <div class="num">1</div>
+    <div class="kick">What works · pedagogical strengths</div>
+    <h2>The moment learning begins, <em>the product shines.</em></h2>
+    <p class="lead">Students aren't just watching lessons. They're exploring worlds. Each subject is its own narrative universe, and the teardown found no other edtech product that builds full narrative worlds around the CBSE curriculum.</p>
+    <div class="books">
+      <div class="book b1" style="animation-delay:.2s"><span class="label">Maths</span><b>The Chosen One</b><p>Real Numbers turned into an epic journey.</p></div>
+      <div class="book b2" style="animation-delay:.35s"><span class="label">Chemistry</span><b>The Legend of Zing</b><p>Chemical Reactions and Equations, The Awakening.</p></div>
+      <div class="book b3" style="animation-delay:.5s"><span class="label">Biology</span><b>Bio Scope</b><p>The Journey Within: Life Processes in plants.</p></div>
+      <div class="book b4" style="animation-delay:.65s"><span class="label">Physics</span><b>Light at the Museum</b><p>Light: Reflection.</p></div>
+    </div>
+    <div class="loop">
+      <div>
+        <div class="label">Watch → Learn → Ace, on every course page</div>
+        <div class="wla">
+          <div style="animation-delay:.9s"><b>Watch</b><span>story driven video</span></div><i>→</i>
+          <div style="animation-delay:1.05s"><b>Learn</b><span>structured notes plus bonus content</span></div><i>→</i>
+          <div style="animation-delay:1.2s"><b>Ace</b><span>MCQ and written tests, badge rewards</span></div>
+        </div>
+        <p class="note">Intentional pedagogy: learning has a clear arc, not just a playlist.</p>
+      </div>
+      <ul class="works">
+        <li style="animation-delay:1.1s"><b>Visual, animated explanations</b> that carry the concept.</li>
+        <li style="animation-delay:1.2s"><b>Teacher credibility:</b> profiles with photo, 6 to 10+ years of experience, philosophy and chapter list. Real people, not avatars.</li>
+        <li style="animation-delay:1.3s"><b>24/7 AI doubt support.</b></li>
+        <li style="animation-delay:1.4s"><b>ALLEN's 35+ year legacy</b> and brand trust.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 03 landscape -->
+  <section class="chap" data-panel="03_landscape" data-alt="Chapter 2, why it stands out. Most edtech platforms optimise for content volume and exam drilling. Eureka optimises for engagement and conceptual clarity, sitting at the intersection of gamified edtech and proven ALLEN coaching fundamentals. A radar chart from the report compares engagement style against content depth on five axes scored 0 to 4: Eureka scores story led 3.8, AI doubts 3.5, mock tests 3.0, live tutors 1.2 and free access 1.0. BYJU'S scores story led 2.5, AI doubts 2.0, free access 3.0, live tutors 2.2 and mock tests 2.8. Khan Academy scores story led 1.8, AI doubts 1.5, free access 4.0, live tutors 1.0 and mock tests 1.5. These are the teardown author's qualitative scores. Key insight: story led learning is Eureka's strongest differentiator; every chapter follows a consistent narrative arc, more immersive than lecture first platforms.">
+    <div class="num">2</div>
+    <div class="kick">Why it stands out</div>
+    <h2>Optimised for <em>clarity,</em> not content volume.</h2>
+    <div class="land">
+      <div>
+        <svg class="radar" id="radar" viewBox="0 0 340 330" width="340" height="330" aria-hidden="true"></svg>
+        <div class="legend"><span><i style="background:var(--bulb)"></i>Eureka</span><span><i style="background:var(--mint)"></i>BYJU'S</span><span><i style="background:var(--sky)"></i>Khan Academy</span></div>
+      </div>
+      <div>
+        <div class="versus">
+          <div class="them" style="animation-delay:.3s"><span class="label">Most edtech platforms optimise for</span><b>Content volume and exam drilling</b></div>
+          <div class="us" style="animation-delay:.6s"><span class="label">Eureka optimises for</span><b>Engagement and conceptual clarity</b></div>
+        </div>
+        <p class="insight">It sits at the intersection of gamified edtech and proven ALLEN coaching fundamentals. <b>Key insight:</b> story led learning is the strongest differentiator. Every chapter follows a consistent narrative arc, more immersive than lecture first platforms.</p>
+        <p class="note">Engagement style against content depth, scored 0 to 4 per axis. Qualitative scores from the teardown, not measured data.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 friction -->
+  <section class="chap" data-panel="04_friction" data-alt="Chapter 3, where friction begins: before value is proven, the product asks for commitment. The funnel today: install app, create account, trial and upsell, watch lesson, experience Eureka. Trial pressure and enrollment asks appear within minutes, before meaningful learning, shown by an in app banner reading Trial ends in 06d 21h 35m with an Enroll Now button. The strongest part of the product appears after onboarding, so urgency appears before trust. Second friction: language. Chapters are English first. Students who learn best in Hindi, Telugu, Tamil or Marathi hit a comprehension wall before they reach the value; the language barrier appears before product understanding, students lose confidence early and confusion replaces curiosity.">
+    <div class="num">3</div>
+    <div class="kick">What doesn't work</div>
+    <h2>Where friction begins: <em>urgency before trust.</em></h2>
+    <p class="lead">Before value is proven, the product asks for commitment.</p>
+    <div class="fr">
+      <div>
+        <div class="label" style="margin-bottom:8px">The funnel today</div>
+        <div class="funnel">
+          <div class="fstep" style="animation-delay:.2s">Install app<span>step 1</span></div>
+          <div class="fstep" style="animation-delay:.35s">Create account<span>step 2</span></div>
+          <div class="fstep bad" style="animation-delay:.5s">Trial / upsell !<span>commitment first</span></div>
+          <div class="fstep" style="animation-delay:.65s">Watch lesson<span>step 4</span></div>
+          <div class="fstep good" style="animation-delay:.8s">Experience Eureka<span>value, last</span></div>
+        </div>
+        <div class="trial"><span class="t">Trial Ends in</span><span class="c">06d 21h 35m</span><span class="btn">Enroll Now</span></div>
+        <p class="note">Recreated from the in app banner shown in the teardown.</p>
+      </div>
+      <div class="walls">
+        <div class="wall" style="animation-delay:.6s">
+          <h3>Selling starts before learning</h3>
+          <p>Trial pressure and enrollment prompts surface within minutes, before meaningful learning happens. The strongest part of the product appears <b>after</b> onboarding, so commitment feels premature.</p>
+        </div>
+        <div class="wall" style="animation-delay:.9s">
+          <h3>Language creates friction</h3>
+          <p>Chapters are English first. Students who learn best in another language hit a comprehension wall before they reach the value. Confusion replaces curiosity, and they lose confidence early.</p>
+          <div class="tags"><span>Hindi</span><span>Telugu</span><span>Tamil</span><span>Marathi</span></div>
+        </div>
+        <p class="verdict">“Too soon, why?”</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 fix -->
+  <section class="chap" data-panel="05_recommendation" data-alt="Chapter 4, the opportunity: speak their language first. Before confusion begins, speak their language. Recommendation 1, a language picker at onboarding (screen 1): during the very first session ask the student to choose a preferred language for explanations (English, Hindi, Telugu, Tamil, Marathi or Bengali) and store it on the user profile, which today shows class and grade but no language preference. One question, one screen, zero friction added. Metric: percentage of users who choose a language other than English, a proxy for latent demand. Recommendation 2, bilingual notes first, dubbed audio second: the Learn tab already has a Notes section, so translated concept notes are low cost (text, not a new recording) and ship faster; Watch tab videos can add a language toggle in a later sprint. Metric: notes open rate by language segment against the English only baseline. Recommendation 3, doubt resolution in the preferred language: a language aware doubt chat using LLM powered responses, so a question asked in Hindi gets an answer in Hindi. Metric: support ticket volume drop and session length increase after launch. The proposed order: pick a language, learn, then choose. Expected outcome: students experience value sooner, understand faster and build trust before being asked to commit.">
+    <div class="num">4</div>
+    <div class="kick">The opportunity · enter the product manager</div>
+    <h2>Before confusion begins, <em>speak their language.</em></h2>
+    <div class="recs">
+      <div class="rec" style="animation-delay:.2s"><div class="n">1</div><h3>Language picker at onboarding</h3><p>Screen 1 of the first session asks for a preferred language for explanations, then stores it on the profile (today it shows class and grade, but no language). One question, one screen, zero friction added.</p><div class="m"><span class="label">Metric</span>% of users choosing a language other than English: a proxy for latent demand</div></div>
+      <div class="rec" style="animation-delay:.4s"><div class="n">2</div><h3>Bilingual notes first, dubbed audio second</h3><p>The Learn tab already has Notes. Translating concept notes is low cost (text, not a new recording) and ships faster. Watch tab videos can add a language toggle in a later sprint.</p><div class="m"><span class="label">Metric</span>Notes open rate by language segment, against the English only baseline</div></div>
+      <div class="rec" style="animation-delay:.6s"><div class="n">3</div><h3>Doubts answered in their language</h3><p>A language aware doubt chat with LLM powered responses: ask in Hindi, get the answer in Hindi. Achievable with LLM tooling today, and ALLEN's brand trust does the rest.</p><div class="m"><span class="label">Metric</span>Support ticket volume drop, and session length increase after launch</div></div>
+    </div>
+    <div class="newflow">
+      <span class="label" style="margin-right:6px">Proposed order</span>
+      <div style="animation-delay:.9s">Pick a language</div><i>→</i>
+      <div style="animation-delay:1.05s">Watch and learn</div><i>→</i>
+      <div style="animation-delay:1.2s">Experience Eureka</div><i>→</i>
+      <div class="last" style="animation-delay:1.35s">Then choose to enroll</div>
+    </div>
+    <p class="outcome"><b>Expected outcome:</b> students experience value sooner, understand faster, and build trust <b>before</b> being asked to commit.</p>
+  </section>
+
+  <!-- 06 close -->
+  <section class="chap" data-panel="06_metrics_close" data-alt="Chapter 5, how success is measured: 1 the percentage of users selecting a language other than English, a proxy for latent demand; 2 notes open rate by language segment against the English baseline; 3 session duration growth after the language launch; 4 conversion rate after the first lesson is experienced; 5 support ticket drop after the language doubt launch. The chain: understanding builds confidence, confidence drives engagement, engagement drives conversion. Closing line: Let Eureka prove itself. Let them learn, then let them choose. The opportunity is not to change how students learn but to remove what prevents them from learning. The strongest path to conversion is not persuasion, it is comprehension.">
+    <div class="num">5</div>
+    <div class="kick">Success metrics and the close</div>
+    <h2>Conversion through <em>comprehension.</em></h2>
+    <div class="close">
+      <div>
+        <div class="label" style="margin-bottom:4px">What to measure</div>
+        <ul class="metrics">
+          <li style="animation-delay:.2s">Users selecting a language other than English<small>a proxy for latent demand</small></li>
+          <li style="animation-delay:.32s">Notes open rate by language segment<small>against the English baseline</small></li>
+          <li style="animation-delay:.44s">Session duration growth<small>after the language launch</small></li>
+          <li style="animation-delay:.56s">Conversion rate after the first lesson<small>measured once value has been experienced</small></li>
+          <li style="animation-delay:.68s">Support ticket drop<small>after the language doubt launch</small></li>
+        </ul>
+      </div>
+      <div>
+        <div class="label">The chain the teardown argues for</div>
+        <div class="ladder">
+          <div style="animation-delay:.5s"><span class="bar" style="width:70px;animation-delay:.6s"></span><b>Understanding</b></div>
+          <div style="animation-delay:.7s"><span class="bar" style="width:120px;animation-delay:.8s"></span><b>Confidence</b></div>
+          <div style="animation-delay:.9s"><span class="bar" style="width:170px;animation-delay:1s"></span><b>Engagement</b></div>
+          <div style="animation-delay:1.1s"><span class="bar" style="width:220px;animation-delay:1.2s;background:var(--mint)"></span><b>Conversion</b></div>
+        </div>
+        <div class="finale">
+          <h3>Let Eureka prove itself. <em>Let them learn. Then let them choose.</em></h3>
+          <p>The opportunity is not to change how students learn, but to remove what prevents them from learning. The strongest path to conversion is not persuasion, it is comprehension.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// radar chart with the report's qualitative scores (0 to 4)
+(function () {
+  const svg = document.getElementById("radar");
+  const cx = 176, cy = 165, R = 98, NS = "http://www.w3.org/2000/svg";
+  const axes = ["Story led", "AI doubts", "Free access", "Live tutors", "Mock tests"];
+  const ang = [90, 18, -54, -126, 162].map((a) => (a * Math.PI) / 180);
+  const pt = (i, r) => [cx + Math.cos(ang[i]) * r, cy - Math.sin(ang[i]) * r];
+  const el = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); svg.appendChild(e); return e; };
+  for (let r = 1; r <= 4; r++) el("polygon", { class: "grid", points: ang.map((_, i) => pt(i, (R * r) / 4).join(",")).join(" ") });
+  ang.forEach((_, i) => { const [x, y] = pt(i, R); el("line", { class: "grid", x1: cx, y1: cy, x2: x, y2: y }); });
+  const series = [
+    ["ka", [1.8, 1.5, 4.0, 1.0, 1.5], ".9s"],
+    ["by", [2.5, 2.0, 3.0, 2.2, 2.8], ".6s"],
+    ["eu", [3.8, 3.5, 1.0, 1.2, 3.0], ".3s"],
+  ];
+  series.forEach(([c, v, d]) => {
+    const p = el("polygon", { class: "poly " + c, points: v.map((s, i) => pt(i, (R * s) / 4).join(",")).join(" ") });
+    p.setAttribute("style", "animation-delay:" + d);
+  });
+  axes.forEach((a, i) => {
+    const [x, y] = pt(i, R + 18);
+    const t = el("text", { x, y: y + 4, "text-anchor": Math.abs(x - cx) < 5 ? "middle" : x > cx ? "start" : "end" });
+    t.textContent = a;
+  });
+})();
+</script>
